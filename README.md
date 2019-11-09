@@ -25,11 +25,12 @@ Usage:
                               - This will speed up performance
             whitelist     - Specify file extension whitelist: (Optional)
                               - This will speed up performance
-                                InputFile:  _________
-                                            |.txt    |
-                                            |.aspx   |
-                                            |________|
-                                e.g. whitelist:"path\\to\\whitelist.txt"
+                                InputFile:       ext.txt:   
+                                                __________                                                     
+                                                |.txt    |
+                                                |.aspx   |
+                                                |________|
+                                e.g. whitelist:"path\\to\\ext.txt"
 
     Examples:
         
