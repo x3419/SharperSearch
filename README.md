@@ -22,9 +22,9 @@ Usage:
 
             -V            - Verbose: Print lines contraining matches (Optional)
             year          - Filter by lastwritetime year e.g. year:2019 (Optional)
-                              - This will speed up performance
+                              - This should speed up performance
             whitelist     - Specify file extension whitelist: (Optional)
-                              - This will speed up performance
+                              - This should speed up performance
                                 InputFile:       ext.txt:   
                                                 __________                                                     
                                                 |.txt    |
