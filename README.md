@@ -16,6 +16,9 @@ Usage:
         Optional:
             pattern      - Type of files to search for, e.g. "*.txt" (Optional)
             searchterm    - Term to search for within files. (Optional)
+
+
+            ###Below are the arguments that I have added to the original SharpSearch:
             -V            - Verbose: Print lines contraining matches (Optional)
             year          - Filter by lastwritetime year e.g. year:2019 (Optional)
 
