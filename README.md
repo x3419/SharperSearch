@@ -16,6 +16,7 @@ Usage:
         Optional:
             pattern      - Type of files to search for, e.g. "*.txt" (Optional)
             searchterm    - Term to search for within files. (Optional)
+            -V            - Verbose: Print lines contraining matches (Optional)
 
     Examples:
         
