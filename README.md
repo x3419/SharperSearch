@@ -17,7 +17,7 @@ Usage:
             pattern      - Type of files to search for, e.g. "*.txt" (Optional)
             searchterm    - Term to search for within files. (Optional)
             -V            - Verbose: Print lines contraining matches (Optional)
-            year          - Filter by year e.g. year:2019 (Optional)
+            year          - Filter by lastwritetime year e.g. year:2019 (Optional)
 
     Examples:
         
