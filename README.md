@@ -55,3 +55,4 @@ Directory of C:\Users\EXAMPLE\hashcat-4.2.1\wordlists\ProbWL-v2-Real-Passwords-7
 
 
 
+# SharperSearch
