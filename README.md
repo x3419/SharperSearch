@@ -17,6 +17,7 @@ Usage:
             pattern      - Type of files to search for, e.g. "*.txt" (Optional)
             searchterm    - Term to search for within files. (Optional)
             -V            - Verbose: Print lines contraining matches (Optional)
+            year          - Filter by year e.g. year:2019
 
     Examples:
         
@@ -56,4 +57,4 @@ Directory of C:\Users\EXAMPLE\hashcat-4.2.1\wordlists\ProbWL-v2-Real-Passwords-7
 
 
 
-# SharperSearch
+
