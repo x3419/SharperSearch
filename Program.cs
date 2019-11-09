@@ -245,6 +245,8 @@ Usage:
             bool grep = args.Contains("-V");
             grepGlobal = grep;
 
+            string year = "";
+
             // argument parsing
 
             var arguments = new Dictionary<string, string>();
@@ -288,6 +290,10 @@ Usage:
             {
                 searchTerm = arguments["searchterm"];
             }
+            if (arguments.ContainsKey("year"))
+            {
+                year = arguments["year"];
+            }
 
 
             string[] files = GetAllFiles(path, pattern);
@@ -310,6 +316,13 @@ Usage:
                     string size = HumanBytes(fileInfo.Length);
 
                     string lastWrite = File.GetLastWriteTime(fileInfo.FullName).Date.ToString();
+                    if(year != "")
+                    {
+                        if (!lastWrite.Contains(year))
+                        {
+                            continue;
+                        }
+                    }
 
                     if (searchTerm == "")
                     {
