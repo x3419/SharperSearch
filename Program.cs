@@ -59,9 +59,9 @@ namespace SharpSearch
                 dirFileCount += 1;
                 dirFileSizes += fileInfo.Length;
                 lastDir = fileInfo.Directory.ToString();
-                Console.WriteLine();
+                //Console.WriteLine();
                 Console.WriteLine("Directory of {0}", fileInfo.Directory);
-                Console.WriteLine(fileStatusLine);
+                Console.WriteLine(fileStatusLine + "\r\n");
             }
         }
 
@@ -106,6 +106,7 @@ Usage:
         Optional:
             patttern      - Type of files to search for, e.g. ""*.txt"" (Optional)
             searchterm    - Term to search for within files. (Optional)
+            -V            - Verbose: Print lines contraining matches (Optional)
 
     Examples:
         
@@ -193,6 +194,7 @@ Usage:
             try
             {
                 var data = File.ReadAllLines(path);
+                var isEmpty = true;
 
                 foreach (var s in data)
                 {
@@ -200,6 +202,7 @@ Usage:
                     if (s != null && !string.IsNullOrEmpty(s) && !s.StartsWith("  ") && s.Length > 0)
                     {
                         string line = s.ToLower().Trim();
+                        
 
                         // use regex to find some key in your case the "ID".
                         // look into regex and word boundry find only lines with ID
@@ -208,11 +211,19 @@ Usage:
                         var isMatch = regex.Match(s.ToLower());
                         if (isMatch.Success)
                         {
-                            return true;
+                            isEmpty = false;
+
+                            //return s;
+                            if (grepGlobal)
+                            {
+                                Console.WriteLine(s);
+                            }
                         }
 
                     }
                 }
+               
+                return !isEmpty;
             }
             catch (IOException ex)
             {
@@ -221,12 +232,18 @@ Usage:
             return false;
         }
 
+        static bool grepGlobal = false;
+
         static void Main(string[] args)
         {
 
             string path = "";
             string pattern = "";
             string searchTerm = "";
+
+            // lazy assignment
+            bool grep = args.Contains("-V");
+            grepGlobal = grep;
 
             // argument parsing
 
@@ -252,14 +269,15 @@ Usage:
             {
                 Console.WriteLine("[-] Error: No path was given.");
                 Usage();
-                Environment.Exit(1);
+                //Environment.Exit(1);
             }
 
             path = arguments["path"];
             if (!Directory.Exists(path))
             {
                 Console.WriteLine("[X] Error: Directory {0} does not exist.", path);
-                Environment.Exit(1);
+                //Environment.Exit(1);
+                Console.ReadLine();
             }
 
             if (arguments.ContainsKey("pattern"))
@@ -270,6 +288,7 @@ Usage:
             {
                 searchTerm = arguments["searchterm"];
             }
+
 
             string[] files = GetAllFiles(path, pattern);
             if (files.Length > 0)
@@ -314,12 +333,15 @@ Usage:
                     else
                     {
                         bool hasSearchTerm = false;
+                        string entireLine = "";
+
                         if (pattern == "")
                         {
                             // Ensure this is not a bad file format.
                             if (fileExtHandler.HasCleanExtension(f))
                             {
                                 hasSearchTerm = FileContainsString(f, searchTerm);
+                                //entireLine = FileContainsString(f, searchTerm);
                             }
                             else
                             {
@@ -329,9 +351,17 @@ Usage:
                         else
                         {
                             hasSearchTerm = FileContainsString(f, searchTerm);
+                            //entireLine = FileContainsString(f, searchTerm);
                         }
                         if (hasSearchTerm)
+                        //if (entireLine != "")
                         {
+
+                            //if (grep)
+                            //{
+                            //    Console.WriteLine(entireLine);
+                            //}
+
                             PrintResults(ref allFilesCount,
                                                     ref allFileSizes,
                                                     ref allDirectoryCount,
