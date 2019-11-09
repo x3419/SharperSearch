@@ -107,6 +107,13 @@ Usage:
             patttern      - Type of files to search for, e.g. ""*.txt"" (Optional)
             searchterm    - Term to search for within files. (Optional)
             -V            - Verbose: Print lines contraining matches (Optional)
+            year          - Filter by year e.g. year:2019 (Optional)
+            whitelist     - Specify file extension whitelist: (Optional)
+                                InputFile:  _________
+                                            |.txt    |
+                                            |.aspx   |
+                                            |________|
+                                e.g. whitelist:""\\to\\whitelist.txt""
 
     Examples:
         
@@ -233,6 +240,7 @@ Usage:
         }
 
         static bool grepGlobal = false;
+        static List<string> whitelist = new List<string>();
 
         static void Main(string[] args)
         {
@@ -246,6 +254,7 @@ Usage:
             grepGlobal = grep;
 
             string year = "";
+            string whitelistPath = "";
 
             // argument parsing
 
@@ -294,6 +303,19 @@ Usage:
             {
                 year = arguments["year"];
             }
+            if (arguments.ContainsKey("whitelist"))
+            {
+                whitelistPath = arguments["whitelist"];
+                List<string> lines = new List<string>();
+                using (StreamReader reader = File.OpenText(whitelistPath))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        lines.Add(reader.ReadLine());
+                    }
+                }
+                whitelist = lines;
+            }
 
 
             string[] files = GetAllFiles(path, pattern);
@@ -314,6 +336,16 @@ Usage:
                     FileInfo fileInfo = new FileInfo(f);
                     string fileStatusLine = GetFileStatusString(fileInfo);
                     string size = HumanBytes(fileInfo.Length);
+
+                    string ext = Path.GetExtension(f);
+                    if(whitelist.Count() != 0) // then we have a whitelist
+                    {
+                        if (!whitelist.Contains(ext))
+                        {
+                            continue; // extension not in whitelist
+                        }
+                    }
+                    
 
                     string lastWrite = File.GetLastWriteTime(fileInfo.FullName).Date.ToString();
                     if(year != "")
