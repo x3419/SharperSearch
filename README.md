@@ -31,6 +31,8 @@ Usage:
                                                 |.aspx   |
                                                 |________|
                                 e.g. whitelist:"path\\to\\ext.txt"
+            blacklist      - Specify file extension blacklistlist: (Optional)
+                      e.g. blacklistlist:"path\\to\\ext.txt"                     
 
     Examples:
         

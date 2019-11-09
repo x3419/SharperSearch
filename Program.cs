@@ -109,12 +109,15 @@ Usage:
             -V            - Verbose: Print lines contraining matches (Optional)
             year          - Filter by year e.g. year:2019 (Optional)
             whitelist     - Specify file extension whitelist: (Optional)
-                                InputFile:  _________
-                                            |.txt    |
-                                            |.aspx   |
-                                            |________|
-                                e.g. whitelist:""\\to\\whitelist.txt""
-
+                              - This should speed up performance
+                                InputFile:       ext.txt:   
+                                                __________                                                     
+                                                |.txt    |
+                                                |.aspx   |
+                                                |________|
+                                e.g. whitelist:""path\\to\\ext.txt""
+           blacklist      - Specify file extension blacklistlist: (Optional)
+                                e.g. blacklistlist:""path\\to\\ext.txt""
     Examples:
         
         Find all files that have the phrase ""password"" in them.
@@ -241,6 +244,7 @@ Usage:
 
         static bool grepGlobal = false;
         static List<string> whitelist = new List<string>();
+        static List<string> blacklist = new List<string>();
 
         static void Main(string[] args)
         {
@@ -255,6 +259,7 @@ Usage:
 
             string year = "";
             string whitelistPath = "";
+            string blacklistPath = "";
 
             // argument parsing
 
@@ -316,6 +321,19 @@ Usage:
                 }
                 whitelist = lines;
             }
+            if (arguments.ContainsKey("blacklist"))
+            {
+                blacklistPath = arguments["blacklist"];
+                List<string> lines = new List<string>();
+                using (StreamReader reader = File.OpenText(blacklistPath))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        lines.Add(reader.ReadLine());
+                    }
+                }
+                blacklist = lines;
+            }
 
 
             string[] files = GetAllFiles(path, pattern);
@@ -343,6 +361,13 @@ Usage:
                         if (!whitelist.Contains(ext))
                         {
                             continue; // extension not in whitelist
+                        }
+                    }
+                    if(blacklist.Count() != 0)
+                    {
+                        if (blacklist.Contains(ext))
+                        {
+                            continue;
                         }
                     }
                     
