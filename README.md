@@ -1,4 +1,4 @@
-# SharpSearch
+# SharperSearch
 
 ## Description
 
@@ -19,15 +19,17 @@ Usage:
 
 
             ~ Below are the arguments that I have added to the original SharpSearch: ~
+
             -V            - Verbose: Print lines contraining matches (Optional)
             year          - Filter by lastwritetime year e.g. year:2019 (Optional)
                               - This will speed up performance
             whitelist     - Specify file extension whitelist: (Optional)
+                              - This will speed up performance
                                 InputFile:  _________
                                             |.txt    |
                                             |.aspx   |
                                             |________|
-                                e.g. whitelist:"\\to\\whitelist.txt"
+                                e.g. whitelist:"path\\to\\whitelist.txt"
 
     Examples:
         
