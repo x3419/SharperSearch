@@ -27,7 +27,7 @@ Usage:
                                             |.txt    |
                                             |.aspx   |
                                             |________|
-                                e.g. whitelist:""\\to\\whitelist.txt""
+                                e.g. whitelist:"\\to\\whitelist.txt"
 
     Examples:
         
