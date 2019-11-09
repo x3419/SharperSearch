@@ -30,7 +30,7 @@ Usage:
 
         Search for all batch files on a remote share that contain the word "Administrator"
 
-            SharpSearch.exe path:\\server01\SYSVOL\domain\scripts\ pattern:*.bat searchTerm:Administrator 
+            SharpSearch.exe -V path:\\server01\SYSVOL\domain\scripts\ pattern:*.bat searchTerm:Administrator 
 ```
 
 ## Examples
