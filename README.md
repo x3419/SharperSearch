@@ -2,7 +2,13 @@
 
 ## Description
 
-Sick and tired of getting alerted on PowerShell and `dir` commands? No more! This project searches for files with the desired extension, and if desired, searches them for a regex string.
+Note: Credit for the original SharpSearch goes to https://github.com/djhohnstein, thanks for the work.
+I've added the following features:
+  - Verbose
+  - year
+  - ext_whitelist
+  - ext_blacklist
+  - search_whitelist
 
 ## Usage
 
