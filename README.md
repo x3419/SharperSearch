@@ -14,8 +14,8 @@ Usage:
                             escape backslashes properly.
         
         Optional:
-            patttern      - Type of files to search for, e.g. ""*.txt"" (Optional)
-            searchterm    - Term to search for within files. (Optional)
+            patttern      - Type of files to search for, e.g. "*.txt" (Optional)
+            searchterm    - Regex to search for within files. (Optional)
             -V            - Verbose: Print lines contraining matches (Optional)
             year          - Filter by year e.g. year:2019 (Optional)
             ext_whitelist     - Specify file extension whitelist: (Optional)
@@ -25,11 +25,11 @@ Usage:
                                                 |.txt    |
                                                 |.aspx   |
                                                 |________|
-                                e.g. whitelist:""path\\to\\ext.txt""
+                                e.g. whitelist:"path\\to\\ext.txt"
            ext_blacklist      - Specify file extension blacklist: (Optional)
-                                e.g. blacklist:""path\\to\\ext.txt""
+                                e.g. blacklist:"path\\to\\ext.txt"
            search_whitelist      - Specify searchterm whitelist: (Optional)
-                                e.g. search_whitelist:""path\\to\\ext.txt""
+                                e.g. search_whitelist:"path\\to\\ext.txt"
     Examples:
         
         Find all files that have the phrase ""password"" in them.
