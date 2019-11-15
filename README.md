@@ -14,35 +14,31 @@ Usage:
                             escape backslashes properly.
         
         Optional:
-            pattern      - Type of files to search for, e.g. "*.txt" (Optional)
+            patttern      - Type of files to search for, e.g. ""*.txt"" (Optional)
             searchterm    - Term to search for within files. (Optional)
-
-
-            ~ Below are the arguments that I have added to the original SharpSearch: ~
-
             -V            - Verbose: Print lines contraining matches (Optional)
-            year          - Filter by lastwritetime year e.g. year:2019 (Optional)
-                              - This should speed up performance
-            whitelist     - Specify file extension whitelist: (Optional)
+            year          - Filter by year e.g. year:2019 (Optional)
+            ext_whitelist     - Specify file extension whitelist: (Optional)
                               - This should speed up performance
                                 InputFile:       ext.txt:   
                                                 __________                                                     
                                                 |.txt    |
                                                 |.aspx   |
                                                 |________|
-                                e.g. whitelist:"path\\to\\ext.txt"
-            blacklist      - Specify file extension blacklist: (Optional)
-                                e.g. blacklistlist:"path\\to\\ext.txt"                     
-
+                                e.g. whitelist:""path\\to\\ext.txt""
+           ext_blacklist      - Specify file extension blacklistlist: (Optional)
+                                e.g. blacklistlist:""path\\to\\ext.txt""
+           search_whitelist      - Specify searchterm whitelist: (Optional)
+                                e.g. search_whitelist:""path\\to\\ext.txt""
     Examples:
         
-        Find all files that have the phrase "password" in them.
+        Find all files that have the phrase ""password"" in them.
         
-            SharpSearch.exe path:"C:\\Users\\User\\My Documents\\" searchterm:password
+            SharpSearch.exe path:""C:\\Users\\User\\My Documents\\"" searchterm:password
 
-        Search for all batch files on a remote share that contain the word "Administrator"
+        Search for all batch files on a remote share that contain the word ""Administrator""
 
-            SharpSearch.exe -V year:2019 path:\\server01\SYSVOL\domain\scripts\ pattern:*.bat searchTerm:Administrator 
+            SharpSearch.exe path:""\\\\server01\\SYSVOL\\domain\\scripts\\"" pattern:*.bat searchTerm:Administrator 
 ```
 
 ## Examples
