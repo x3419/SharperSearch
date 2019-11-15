@@ -116,10 +116,10 @@ Usage:
                                                 |.aspx   |
                                                 |________|
                                 e.g. whitelist:""path\\to\\ext.txt""
-           ext_blacklist      - Specify file extension blacklistlist: (Optional)
-                                e.g. blacklistlist:""path\\to\\ext.txt""
+           ext_blacklist      - Specify file extension blacklist: (Optional)
+                                e.g. blacklist:""path\\to\\ext.txt""
            search_whitelist      - Specify searchterm whitelist: (Optional)
-                                e.g. search_whitelist:""path\\to\\ext.txt""
+                                e.g. search_whitelist:""path\\to\\searchterms.txt""
     Examples:
         
         Find all files that have the phrase ""password"" in them.
