@@ -108,7 +108,7 @@ Usage:
             searchterm    - Term to search for within files. (Optional)
             -V            - Verbose: Print lines contraining matches (Optional)
             year          - Filter by year e.g. year:2019 (Optional)
-            whitelist     - Specify file extension whitelist: (Optional)
+            ext_whitelist     - Specify file extension whitelist: (Optional)
                               - This should speed up performance
                                 InputFile:       ext.txt:   
                                                 __________                                                     
@@ -116,8 +116,10 @@ Usage:
                                                 |.aspx   |
                                                 |________|
                                 e.g. whitelist:""path\\to\\ext.txt""
-           blacklist      - Specify file extension blacklistlist: (Optional)
+           ext_blacklist      - Specify file extension blacklistlist: (Optional)
                                 e.g. blacklistlist:""path\\to\\ext.txt""
+           search_whitelist      - Specify searchterm whitelist: (Optional)
+                                e.g. search_whitelist:""path\\to\\ext.txt""
     Examples:
         
         Find all files that have the phrase ""password"" in them.
@@ -209,10 +211,10 @@ Usage:
                 foreach (var s in data)
                 {
                     // make sure its not null doesn't start with an empty line or something.
-                    if (s != null && !string.IsNullOrEmpty(s) && !s.StartsWith("  ") && s.Length > 0)
+                    if (s != null && !string.IsNullOrEmpty(s) && !s.StartsWith("  ") && s.Length > 0 && searchTerm != null && searchTerm != "")
                     {
                         string line = s.ToLower().Trim();
-                        
+
 
                         // use regex to find some key in your case the "ID".
                         // look into regex and word boundry find only lines with ID
@@ -243,8 +245,10 @@ Usage:
         }
 
         static bool grepGlobal = false;
-        static List<string> whitelist = new List<string>();
-        static List<string> blacklist = new List<string>();
+        static List<string> ext_whitelist = new List<string>();
+        static List<string> ext_blacklist = new List<string>();
+        static List<string> search_whitelist = new List<string>();
+
 
         static void Main(string[] args)
         {
@@ -308,9 +312,9 @@ Usage:
             {
                 year = arguments["year"];
             }
-            if (arguments.ContainsKey("whitelist"))
+            if (arguments.ContainsKey("ext_whitelist"))
             {
-                whitelistPath = arguments["whitelist"];
+                whitelistPath = arguments["ext_whitelist"];
                 List<string> lines = new List<string>();
                 using (StreamReader reader = File.OpenText(whitelistPath))
                 {
@@ -319,11 +323,11 @@ Usage:
                         lines.Add(reader.ReadLine());
                     }
                 }
-                whitelist = lines;
+                ext_whitelist = lines;
             }
-            if (arguments.ContainsKey("blacklist"))
+            if (arguments.ContainsKey("ext_blacklist"))
             {
-                blacklistPath = arguments["blacklist"];
+                blacklistPath = arguments["ext_blacklist"];
                 List<string> lines = new List<string>();
                 using (StreamReader reader = File.OpenText(blacklistPath))
                 {
@@ -332,8 +336,22 @@ Usage:
                         lines.Add(reader.ReadLine());
                     }
                 }
-                blacklist = lines;
+                ext_blacklist = lines;
             }
+            if (arguments.ContainsKey("search_whitelist"))
+            {
+                whitelistPath = arguments["search_whitelist"];
+                List<string> lines = new List<string>();
+                using (StreamReader reader = File.OpenText(whitelistPath))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        lines.Add(reader.ReadLine());
+                    }
+                }
+                search_whitelist = lines;
+            }
+            
 
 
             string[] files = GetAllFiles(path, pattern);
@@ -356,20 +374,21 @@ Usage:
                     string size = HumanBytes(fileInfo.Length);
 
                     string ext = Path.GetExtension(f);
-                    if(whitelist.Count() != 0) // then we have a whitelist
+                    if(ext_whitelist.Count() != 0) // then we have a whitelist
                     {
-                        if (!whitelist.Contains(ext))
+                        if (!ext_whitelist.Contains(ext))
                         {
                             continue; // extension not in whitelist
                         }
                     }
-                    if(blacklist.Count() != 0)
+                    if(ext_blacklist.Count() != 0)
                     {
-                        if (blacklist.Contains(ext))
+                        if (ext_blacklist.Contains(ext))
                         {
                             continue;
                         }
                     }
+                    
                     
 
                     string lastWrite = File.GetLastWriteTime(fileInfo.FullName).Date.ToString();
@@ -381,7 +400,7 @@ Usage:
                         }
                     }
 
-                    if (searchTerm == "")
+                    if (searchTerm == "" && search_whitelist.Count() == 0)
                     {
                         try
                         {
@@ -405,12 +424,26 @@ Usage:
                         bool hasSearchTerm = false;
                         string entireLine = "";
 
+                        if (search_whitelist.Count() > 0)
+                        {
+                            foreach (string eachSearchTerm in search_whitelist)
+                            {
+                                if (FileContainsString(f, eachSearchTerm))
+                                {
+                                    hasSearchTerm = true;
+                                }
+                            }
+                        }
+
                         if (pattern == "")
                         {
                             // Ensure this is not a bad file format.
                             if (fileExtHandler.HasCleanExtension(f))
                             {
-                                hasSearchTerm = FileContainsString(f, searchTerm);
+                                if (!hasSearchTerm)
+                                {
+                                    hasSearchTerm = FileContainsString(f, searchTerm);
+                                }
                                 //entireLine = FileContainsString(f, searchTerm);
                             }
                             else
@@ -420,9 +453,14 @@ Usage:
                         }
                         else
                         {
-                            hasSearchTerm = FileContainsString(f, searchTerm);
+                            if (!hasSearchTerm)
+                            {
+                                hasSearchTerm = FileContainsString(f, searchTerm);
+                            }
                             //entireLine = FileContainsString(f, searchTerm);
+
                         }
+
                         if (hasSearchTerm)
                         //if (entireLine != "")
                         {
@@ -440,6 +478,7 @@ Usage:
                                                     ref dirFileSizes,
                                                     ref dirFileCount,
                                                     fileStatusLine);
+                            Console.WriteLine();
                         }
                     }
                 }
