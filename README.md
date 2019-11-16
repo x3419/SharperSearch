@@ -36,6 +36,8 @@ Usage:
                                 e.g. blacklist:"path\\to\\ext.txt"
            search_whitelist      - Specify searchterm whitelist: (Optional)
                                 e.g. search_whitelist:"path\\to\\ext.txt"
+           searchterms        - Specify a comma deliminated list of searchterms (Optional)
+                                e.g. searchterms:foo,bar,asdf
     Examples:
         
         Find all files that have the phrase ""password"" in them.

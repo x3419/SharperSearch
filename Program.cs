@@ -118,8 +118,10 @@ Usage:
                                 e.g. whitelist:""path\\to\\ext.txt""
            ext_blacklist      - Specify file extension blacklist: (Optional)
                                 e.g. blacklist:""path\\to\\ext.txt""
-           search_whitelist      - Specify searchterm whitelist: (Optional)
+           search_whitelist      - Specify a list of searchterms in a file: (Optional)
                                 e.g. search_whitelist:""path\\to\\searchterms.txt""
+           searchterms        - Specify a comma deliminated list of searchterms (Optional)
+                                e.g. searchterms:foo,bar,asdf
     Examples:
         
         Find all files that have the phrase ""password"" in them.
@@ -350,6 +352,11 @@ Usage:
                     }
                 }
                 search_whitelist = lines;
+            }
+            if (arguments.ContainsKey("searchterms"))
+            {
+                String[] split = arguments["searchterms"].Split(',');
+                search_whitelist = split.ToList<string>();
             }
             
 
