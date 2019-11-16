@@ -9,6 +9,7 @@ I've added the following features:
   - ext_whitelist
   - ext_blacklist
   - search_whitelist
+  - searchterms
 
 ## Usage
 
